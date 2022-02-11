@@ -3,13 +3,13 @@ import {
   LogSystemAdapter,
   EventSystemAdapter,
   StyleSystemAdapter,
-  WorkspaceSystemAdapter,
-  DataSourceSystemAdapter,
 } from '../../DTCD-SDK/index';
 
 import fieldsMap from './fields-map';
+import { version } from './../package.json';
 
 export class ConfigEditorPanel extends PanelPlugin {
+
   #guid;
   #eventSystem;
   #styleSystem;
@@ -22,20 +22,20 @@ export class ConfigEditorPanel extends PanelPlugin {
 
   static getRegistrationMeta() {
     return {
+      version,
       type: 'panel',
       name: 'ConfigEditorPanel',
       title: 'Панель конфигурации',
-      version: '0.1.0',
       withDependencies: true,
     };
   }
 
   constructor(guid, selector) {
     super();
-    this.#logSystem = new LogSystemAdapter(guid, ConfigEditorPanel.getRegistrationMeta().name)
-    this.#eventSystem = new EventSystemAdapter(guid);
+    this.#logSystem = new LogSystemAdapter('0.4.0', guid, ConfigEditorPanel.getRegistrationMeta().name)
+    this.#eventSystem = new EventSystemAdapter('0.3.0', guid);
     this.#eventSystem.registerPluginInstance(this);
-    this.#styleSystem = new StyleSystemAdapter();
+    this.#styleSystem = new StyleSystemAdapter('0.3.1');
 
     this.#guid = guid;
 
@@ -52,7 +52,7 @@ export class ConfigEditorPanel extends PanelPlugin {
     this.#logSystem.debug("Root element inited")
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('WorkspaceSystem')),
+      this.getGUID(this.getSystem('WorkspaceSystem', '0.3.0')),
       'WorkspaceCellClicked',
       guid,
       'createConfigForm'
@@ -171,7 +171,7 @@ export class ConfigEditorPanel extends PanelPlugin {
         this.#logSystem.debug(`Filling of select "item" slot completed`)
       }
 
-      // If field is form input. 
+      // If field is form input.
       // Main sign that field is form field - propName.
       if (typeof propName !== 'undefined') {
         // Setting "input" event listener
@@ -200,4 +200,5 @@ export class ConfigEditorPanel extends PanelPlugin {
       this.#logSystem.debug("Form fields of object are created")
     }
   }
+
 }

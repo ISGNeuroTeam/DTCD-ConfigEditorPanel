@@ -1,16 +1,19 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import styles from 'rollup-plugin-styles';
+import json from '@rollup/plugin-json';
 import { babel } from '@rollup/plugin-babel';
+import { version } from './package.json';
 
 const watch = Boolean(process.env.ROLLUP_WATCH);
 
 const pluginName = 'ConfigEditorPanel';
 const fileDest = watch
-  ? `./../../DTCD/server/plugins/DTCD-${pluginName}/${pluginName}.js`
+  ? `./../../DTCD/server/plugins/DTCD-${pluginName}_${version}/${pluginName}.js`
   : `./build/${pluginName}.js`;
 
 const plugins = [
+  json(),
   resolve({
     jsnext: true,
     preferBuiltins: true,
