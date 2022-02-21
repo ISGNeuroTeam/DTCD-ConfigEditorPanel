@@ -32,10 +32,10 @@ export class ConfigEditorPanel extends PanelPlugin {
 
   constructor(guid, selector) {
     super();
-    this.#logSystem = new LogSystemAdapter('0.4.0', guid, ConfigEditorPanel.getRegistrationMeta().name)
-    this.#eventSystem = new EventSystemAdapter('0.3.0', guid);
+    this.#logSystem = new LogSystemAdapter('0.5.0', guid, ConfigEditorPanel.getRegistrationMeta().name)
+    this.#eventSystem = new EventSystemAdapter('0.4.0', guid);
     this.#eventSystem.registerPluginInstance(this);
-    this.#styleSystem = new StyleSystemAdapter('0.3.1');
+    this.#styleSystem = new StyleSystemAdapter('0.4.0');
 
     this.#guid = guid;
 
@@ -52,7 +52,7 @@ export class ConfigEditorPanel extends PanelPlugin {
     this.#logSystem.debug("Root element inited")
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('WorkspaceSystem', '0.3.0')),
+      this.getGUID(this.getSystem('WorkspaceSystem', '0.4.0')),
       'WorkspaceCellClicked',
       guid,
       'createConfigForm'
