@@ -5,8 +5,11 @@ import {
   StyleSystemAdapter,
 } from '../../DTCD-SDK/index';
 
-import fieldsMap from './fields-map';
 import { version } from './../package.json';
+
+import fieldsMap from './fields-map';
+import styles from './ConfigEditorPanel.scss';
+import html from './temp.html';
 
 export class ConfigEditorPanel extends PanelPlugin {
 
@@ -42,37 +45,44 @@ export class ConfigEditorPanel extends PanelPlugin {
     // Root element
     this.#rootElement = document.querySelector(selector);
     this.#styleSystem.setVariablesToElement(this.#rootElement, this.#styleSystem.getCurrentTheme());
-    this.#rootElement.style.display = 'flex';
-    this.#rootElement.style['flex-flow'] = 'column';
-    this.#rootElement.style.padding = '20px';
+    this.#rootElement.classList.add('ConfigEditorPanel');
+    this.#rootElement.innerHTML = html;
+
+    const style = document.createElement('style');
+    this.#rootElement.appendChild(style);
+    style.appendChild(document.createTextNode(styles));
 
     this.#temp = {};
     this.#focusedPluginInstance = {};
     this.#watchingMode = true;
     this.#logSystem.debug("Root element inited")
 
-    this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('WorkspaceSystem', '0.4.0')),
-      'WorkspaceCellClicked',
-      guid,
-      'createConfigForm'
-    );
-    this.#renderPanelHeader();
+    // this.#eventSystem.subscribe(
+    //   this.getGUID(this.getSystem('WorkspaceSystem', '0.4.0')),
+    //   'WorkspaceCellClicked',
+    //   guid,
+    //   'createConfigForm'
+    // );
+    // this.#renderPanelHeader();
   }
 
   #renderPanelHeader() {
-    this.#rootElement.innerHTML = '<h1>Настройки компонента</h1>';
+    const mainHeading = document.createElement('h1');
+    mainHeading.textContent = 'Настройки компонента';
+    this.#rootElement.appendChild(mainHeading);
+
     const checkboxElement = document.createElement('input');
     checkboxElement.type = 'checkbox';
     checkboxElement.checked = this.#watchingMode;
     checkboxElement.addEventListener('input', e => {
       this.#watchingMode = !this.#watchingMode;
     });
+
     const labelWatchingEl = document.createElement('label');
     labelWatchingEl.innerText = 'Следить за панелями';
     labelWatchingEl.appendChild(checkboxElement);
     this.#rootElement.appendChild(labelWatchingEl);
-    this.#logSystem.debug("Header of panel attached")
+    this.#logSystem.debug('Header of panel attached');
   }
 
   #renderPanelFooter() {
