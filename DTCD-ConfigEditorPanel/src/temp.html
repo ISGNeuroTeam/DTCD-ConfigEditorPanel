@@ -1,1 +1,142 @@
-<h1>Заголовок</h1>
+<div class="ConfigEditorPanel">
+    <div class="Block">
+        <h1 class="ConfigTitle">Настройка компонента</h1>
+        <span class="Subtitle">speedometr_1</span>  
+    </div>
+
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <h2 class="BlockTitle">Общие настройки</h2>
+        <base-input class="Input" label="Название компонента" placeholder="Компонент 1"></base-input>
+        <base-textarea class="Textarea" label="Описание компонента" placeholder="Показатели увеличения рыночной цены перевозки груза..."></base-textarea>
+        <base-checkbox class="Checkbox" checked label="Показать имя компонента"></base-checkbox>
+        <base-checkbox class="Checkbox" label="Показать имя компонента"></base-checkbox> 
+    </div>
+
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <h2 class="BlockTitle">Источник данных</h2>
+        <base-select size="small" label="Имя иточника данных" placeholder="Название источника данных"></base-select>
+    </div>
+
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <h2 class="BlockTitle">Единицы измерения</h2>
+        <base-input class="ElementInput" label="Введите значение" placeholder="млн. руб."></base-input>
+        <span class="Subtitle">Например: млн.руб./мес, млн.руб.,%, дней и тд.</span>    
+    </div>
+
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <h2 class="BlockTitle">Диапазон данных</h2>
+        <div class="DataItem">
+            <base-input class="SmallInput"></base-input>
+            <span class="Dash"></span>
+            <base-input class="SmallInput"></base-input>
+            <base-color-picker class="Picker"></base-color-picker>
+            <button class="Icon">
+                <svg class="Icon_notification" width="10" height="12" viewBox="0 0 10 12" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.99967 11.8332C4.3557 11.83 3.83354 11.3105 3.82717 10.6665H6.16051C6.16174 10.8225 6.132 10.9771 6.07301 11.1215C5.91997 11.4727 5.6074 11.7288 5.23301 11.8098H5.23009H5.22134H5.21084H5.20559C5.13782 11.8239 5.06889 11.8318 4.99967 11.8332ZM9.66634 10.0832H0.333008V8.9165L1.49967 8.33317V5.12484C1.46894 4.30182 1.6548 3.48516 2.03867 2.7565C2.42078 2.08072 3.07391 1.60085 3.83301 1.43817V0.166504H6.16634V1.43817C7.67076 1.79634 8.49967 3.10534 8.49967 5.12484V8.33317L9.66634 8.9165V10.0832Z"/>
+                </svg>
+            </button>
+            <button class="Icon">
+                <svg class="Icon_trash" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.1667 12.6667H4.33333C3.689 12.6667 3.16667 12.1443 3.16667 11.5V3.91667H2V2.75H4.33333V2.16667C4.33333 1.52233 4.85567 1 5.5 1H9C9.64433 1 10.1667 1.52233 10.1667 2.16667V2.75H12.5V3.91667H11.3333V11.5C11.3333 12.1443 10.811 12.6667 10.1667 12.6667ZM4.33333 3.91667V11.5H10.1667V3.91667H4.33333ZM5.5 2.16667V2.75H9V2.16667H5.5ZM9 10.3333H7.83333V5.08333H9V10.3333ZM6.66667 10.3333H5.5V5.08333H6.66667V10.3333Z"/>
+                </svg> 
+            </button>     
+        </div>
+
+        <div class="DataItem">
+            <base-input class="SmallInput"></base-input>
+            <span class="Dash"></span>
+            <base-input class="SmallInput"></base-input>
+            <base-color-picker class="Picker"></base-color-picker>
+            <button class="Icon">
+                <svg class="Icon_notification" width="10" height="12" viewBox="0 0 10 12" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.99967 11.8332C4.3557 11.83 3.83354 11.3105 3.82717 10.6665H6.16051C6.16174 10.8225 6.132 10.9771 6.07301 11.1215C5.91997 11.4727 5.6074 11.7288 5.23301 11.8098H5.23009H5.22134H5.21084H5.20559C5.13782 11.8239 5.06889 11.8318 4.99967 11.8332ZM9.66634 10.0832H0.333008V8.9165L1.49967 8.33317V5.12484C1.46894 4.30182 1.6548 3.48516 2.03867 2.7565C2.42078 2.08072 3.07391 1.60085 3.83301 1.43817V0.166504H6.16634V1.43817C7.67076 1.79634 8.49967 3.10534 8.49967 5.12484V8.33317L9.66634 8.9165V10.0832Z"/>
+                </svg>
+            </button>
+            <button class="Icon">
+                <svg class="Icon_trash" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.1667 12.6667H4.33333C3.689 12.6667 3.16667 12.1443 3.16667 11.5V3.91667H2V2.75H4.33333V2.16667C4.33333 1.52233 4.85567 1 5.5 1H9C9.64433 1 10.1667 1.52233 10.1667 2.16667V2.75H12.5V3.91667H11.3333V11.5C11.3333 12.1443 10.811 12.6667 10.1667 12.6667ZM4.33333 3.91667V11.5H10.1667V3.91667H4.33333ZM5.5 2.16667V2.75H9V2.16667H5.5ZM9 10.3333H7.83333V5.08333H9V10.3333ZM6.66667 10.3333H5.5V5.08333H6.66667V10.3333Z"/>
+                </svg> 
+            </button> 
+        </div>
+
+        <div class="DataItem">
+            <base-input class="SmallInput"></base-input>
+            <span class="Dash"></span>
+            <base-input class="SmallInput"></base-input>
+            <base-color-picker class="Picker"></base-color-picker>
+            <button class="Icon">
+                <svg class="Icon_notification" width="10" height="12" viewBox="0 0 10 12" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.99967 11.8332C4.3557 11.83 3.83354 11.3105 3.82717 10.6665H6.16051C6.16174 10.8225 6.132 10.9771 6.07301 11.1215C5.91997 11.4727 5.6074 11.7288 5.23301 11.8098H5.23009H5.22134H5.21084H5.20559C5.13782 11.8239 5.06889 11.8318 4.99967 11.8332ZM9.66634 10.0832H0.333008V8.9165L1.49967 8.33317V5.12484C1.46894 4.30182 1.6548 3.48516 2.03867 2.7565C2.42078 2.08072 3.07391 1.60085 3.83301 1.43817V0.166504H6.16634V1.43817C7.67076 1.79634 8.49967 3.10534 8.49967 5.12484V8.33317L9.66634 8.9165V10.0832Z"/>
+                </svg>
+            </button>
+            <button class="Icon">
+                <svg class="Icon_trash" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.1667 12.6667H4.33333C3.689 12.6667 3.16667 12.1443 3.16667 11.5V3.91667H2V2.75H4.33333V2.16667C4.33333 1.52233 4.85567 1 5.5 1H9C9.64433 1 10.1667 1.52233 10.1667 2.16667V2.75H12.5V3.91667H11.3333V11.5C11.3333 12.1443 10.811 12.6667 10.1667 12.6667ZM4.33333 3.91667V11.5H10.1667V3.91667H4.33333ZM5.5 2.16667V2.75H9V2.16667H5.5ZM9 10.3333H7.83333V5.08333H9V10.3333ZM6.66667 10.3333H5.5V5.08333H6.66667V10.3333Z"/>
+                </svg> 
+            </button> 
+        </div>
+    </div>
+    
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <base-button theme="theme_red" size="small">Удалить компонент</base-button>
+    </div>
+    
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <h2 class="BlockTitle">Настройка столбцов</h2>
+        <div class="ColumnSetting">
+            <base-input class="Input" label="Укажите целевой столбец" placeholder="План"></base-input>
+            <span class="PickerName">Цвет
+                <base-color-picker class="Picker"></base-color-picker>
+            </span>  
+        </div> 
+        <div class="ColumnSetting">
+            <base-input class="Input" label="Укажите вторичный столбец" placeholder="Факт"></base-input>
+            <span class="PickerName">Цвет
+                <base-color-picker class="Picker"></base-color-picker>
+            </span>
+        </div> 
+        <span class="Subtitle">Названия столбцов должны совпадать с названиями показателей из источника данных.</span>
+    </div>
+
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <h2 class="BlockTitle">Риск-аппетит</h2>
+        <span class="RiskTitle">Отображить риск-аппетит
+            <base-switch checked></base-switch>
+        </span> 
+        <span class="RiskTitle">Цвет риск-аппетита
+            <base-color-picker class="Picker"></base-color-picker>
+        </span>   
+    </div>
+
+    <span class="Separator"></span>
+
+    <div class="Block">
+        <h2 class="BlockTitle">Шкала диапазона данных</h2>
+        <div class="LabelLeft">
+            <div class="Item">
+                <span class="LabelName">Min</span>
+                <base-input class="SmallInput"></base-input>
+            </div>
+            <div class="Item">
+                <span class="LabelName">Max</span>
+                <base-input class="SmallInput"></base-input>
+            </div>   
+        </div>     
+    </div>
+
+    <span class="Separator"></span>
+</div>

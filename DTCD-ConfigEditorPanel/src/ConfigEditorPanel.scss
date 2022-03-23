@@ -1,5 +1,150 @@
 .ConfigEditorPanel {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  color: var(--text_main);
+
+  .Block {
+    padding: 10px;
+
+    .ConfigTitle {
+      font-weight: 700px;
+      font-size: 17px;
+      line-height: 22px;
+      margin: 0;
+    }
+
+    .BlockTitle {
+      font-weight: 600; 
+      font-size: 15px;
+      line-height: 18px;
+      margin: 0; 
+      padding-bottom: 10px;
+    }
+
+    .Textarea {
+      padding-top: 5px;
+    }
+
+    .ColumnSetting {
+      display: flex;
+
+      &:first-of-type {
+        padding-bottom: 10px;
+      }
+
+      & > .Input {
+        padding-bottom: 0;
+      }
+    }
+    .PickerName {
+      display: block;
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 1.18;
+      padding-left: 10px;
+      width: 50px;
+      text-align: end;
+
+      & > .Picker {
+        padding-top: 4px;
+      }
+    }
+
+    .RiskTitle {
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0 10px;
+
+      &:last-child {
+        padding: 0;
+      }
+    }
+
+    .Input {
+      padding-bottom: 5px;
+      width: 100%;
+    }
+
+    .Checkbox {
+      display: flex;
+      padding-top: 10px;
+    }
+
+    .Subtitle {
+      font-size: 11px;
+      color: var(--text_secondary);
+    }
+
+    .SmallInput {
+      width: 80px;
+    }
+
+    .LabelLeft {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+
+      .Item {
+        display: flex;
+        align-items: center;
+        padding-right: 31px;
+
+        & > .LabelName {
+          padding-right: 8px;
+        }
+      }  
+    }
+
+    .DataItem {
+      display: flex;
+      padding-top: 6px;
+      align-items: center;
+
+      &:first-of-type {
+        padding-top: 0;
+      }
+      
+      .Dash {
+        width: 14px;
+        margin: 0 3px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .Picker {
+        padding: 0 4px 0 20px;
+        align-self: flex-end;
+      }
+
+      .Icon {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 9px 0 0;
+
+        &_notification {
+          fill: var(--border);
+          padding-right: 4px;
+
+          &:hover {
+            fill: var(--button_primary);
+          }
+        }
+
+        &_trash {
+          fill: var(--danger_24);
+
+          &:hover {
+            fill: var(--danger);
+          }
+        }
+      }
+    }
+  }
+
+  .Separator {
+    border-bottom: 1px solid var(--border);
+  }
 }
