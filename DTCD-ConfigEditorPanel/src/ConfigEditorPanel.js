@@ -7,6 +7,7 @@ import {
 
 import { version } from './../package.json';
 
+import './../fonts/fonts.css';
 import fieldsMap from './fields-map';
 import styles from './ConfigEditorPanel.scss';
 import html from './temp.html';
