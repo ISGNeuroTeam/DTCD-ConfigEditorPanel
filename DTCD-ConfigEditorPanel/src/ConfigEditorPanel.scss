@@ -4,7 +4,8 @@
   color: var(--text_main);
   font-family: 'Proxima Nova';
 
-  .Section {
+  .Section, 
+  .Header {
     padding: 10px;
     border-bottom: 1px solid var(--border);
 
@@ -26,6 +27,10 @@
       padding-bottom: 10px;
     }
 
+    .ButtonAdd {
+      padding: 10px 0; 
+    }
+
     .ColumnSetting {
       display: flex;
 
@@ -35,29 +40,27 @@
 
       & > .FieldInput {
         padding-bottom: 0;
+        padding-right: 10px;
       }
-    }
-    .ColorPickerName {
-      display: block;
-      font-weight: 600;
-      font-size: 11px;
-      line-height: 1.18;
-      padding-left: 10px;
-      width: 50px;
-      text-align: end;
 
       & > .ColorPicker {
-        padding-top: 4px;
+
+        & > span {
+          float: right;
+        }
       }
     }
 
-    .RiskTitle {
-      font-size: 11px;
-      font-weight: 600;
+    .RiskSwitchContainer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 0 10px;
+
+      .RiskSwitchLabel {
+        font-size: 11px;
+        font-weight: 600;
+      }
 
       &:last-child {
         padding: 0;
@@ -65,24 +68,28 @@
     }
 
     .FieldInput {
-      padding-bottom: 5px;
+      padding-bottom: 10px;
       width: 100%;
     }
-
+    
     .Checkbox {
       display: flex;
       padding-top: 10px;
     }
 
-    .Subtitle {
+    .TextNote {
+      display: block;
       font-size: 11px;
       color: var(--text_secondary);
     }
 
     .LabelLeft {
       display: flex;
-      align-items: center;
       font-size: 13px;
+
+      .FieldInput {
+        padding: 0;
+      }
 
       .Item {
         display: flex;
@@ -101,11 +108,15 @@
 
     .SectionDataItem {
       display: flex;
-      padding-top: 6px;
       align-items: center;
+      padding-bottom: 10px;
 
       &:first-of-type {
         padding-top: 0;
+      }
+
+      .FieldInput {
+        padding-bottom: 0;
       }
       
       .Dash {
@@ -115,19 +126,21 @@
       }
 
       .ColorPicker {
-        padding: 0 4px 1px 20px;
-        align-self: auto;
+        padding: 0 4px 0 20px;
       }
 
       .Icon {
         border: none;
         background-color: transparent;
         cursor: pointer;
-        padding: 2px 0 0;
+        padding: 0 5px 0 0;
+
+        &:last-child {
+          padding: 0;
+        }
 
         &_notification {
           fill: var(--border);
-          padding-right: 4px;
 
           &:hover {
             fill: var(--button_primary);
@@ -143,5 +156,11 @@
         }
       }
     }
+  }
+
+  .Footer {
+    width: 50%;
+    padding: 10px;
+    align-self: center;
   }
 }
