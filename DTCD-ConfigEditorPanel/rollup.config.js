@@ -21,8 +21,6 @@ const plugins = [
     browser: true,
   }),
   styles({
-    // mode: 'inject',
-    // modules: true,
     mode:['inject',()=>''],
   }),
   html({

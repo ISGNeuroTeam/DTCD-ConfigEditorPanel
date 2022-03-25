@@ -10,7 +10,9 @@ import { version } from './../package.json';
 import './../fonts/fonts.css';
 import fieldsMap from './fields-map';
 import styles from './ConfigEditorPanel.scss';
-import html from './temp.html';
+import MainHtml from './templates/Main.html';
+import HeaderHtml from './templates/Header.html';
+import FooterHtml from './templates/Footer.html';
 
 export class ConfigEditorPanel extends PanelPlugin {
 
@@ -20,6 +22,8 @@ export class ConfigEditorPanel extends PanelPlugin {
   #logSystem;
 
   #rootElement;
+  #configEditorPanel;
+  #configEditorBody;
   #watchingMode;
   #focusedPluginInstance;
   #temp;
@@ -47,7 +51,9 @@ export class ConfigEditorPanel extends PanelPlugin {
     this.#rootElement = document.querySelector(selector);
     this.#styleSystem.setVariablesToElement(this.#rootElement, this.#styleSystem.getCurrentTheme());
     this.#rootElement.classList.add('ConfigEditorPanel');
-    this.#rootElement.innerHTML = html;
+    // this.#rootElement.innerHTML = MainHtml;
+    // this.#configEditorBody = this.#rootElement.querySelector('.Body-js');
+    this.#renderPanelHeader();
 
     const style = document.createElement('style');
     this.#rootElement.appendChild(style);
@@ -56,7 +62,7 @@ export class ConfigEditorPanel extends PanelPlugin {
     this.#temp = {};
     this.#focusedPluginInstance = {};
     this.#watchingMode = true;
-    this.#logSystem.debug("Root element inited")
+    this.#logSystem.debug('Root element inited');
 
     // this.#eventSystem.subscribe(
     //   this.getGUID(this.getSystem('WorkspaceSystem', '0.4.0')),
@@ -64,38 +70,32 @@ export class ConfigEditorPanel extends PanelPlugin {
     //   guid,
     //   'createConfigForm'
     // );
-    // this.#renderPanelHeader();
   }
 
   #renderPanelHeader() {
-    const mainHeading = document.createElement('h1');
-    mainHeading.textContent = 'Настройки компонента';
-    this.#rootElement.appendChild(mainHeading);
+    this.#rootElement.innerHTML = HeaderHtml;
+    this.#rootElement.innerHTML += MainHtml;
+    this.#configEditorBody = this.#rootElement.querySelector('.Body-js');
 
-    const checkboxElement = document.createElement('input');
-    checkboxElement.type = 'checkbox';
-    checkboxElement.checked = this.#watchingMode;
-    checkboxElement.addEventListener('input', e => {
+    const checkboxWatcher = this.#rootElement.querySelector('.Checkbox_toggleWatch-js');
+    checkboxWatcher.checked = this.#watchingMode;
+
+    checkboxWatcher.addEventListener('input', e => {
       this.#watchingMode = !this.#watchingMode;
     });
 
-    const labelWatchingEl = document.createElement('label');
-    labelWatchingEl.innerText = 'Следить за панелями';
-    labelWatchingEl.appendChild(checkboxElement);
-    this.#rootElement.appendChild(labelWatchingEl);
     this.#logSystem.debug('Header of panel attached');
   }
 
   #renderPanelFooter() {
-    const acceptBtn = document.createElement('base-button');
-    acceptBtn.textContent = 'Сохранить';
+    this.#rootElement.innerHTML += FooterHtml;
+    const acceptBtn = this.#rootElement.querySelector('[name="accept-btn"]');
+
     acceptBtn.addEventListener('click', () => {
       this.#focusedPluginInstance.setFormSettings(this.#temp);
     });
-    acceptBtn.style.padding = '10px';
-    acceptBtn.style.maxWidth = '150px';
-    this.#rootElement.appendChild(acceptBtn);
-    this.#logSystem.debug("Footer of panel attached")
+    
+    this.#logSystem.debug('Footer of panel attached');
   }
 
   setWatchingMode(val) {
@@ -114,15 +114,15 @@ export class ConfigEditorPanel extends PanelPlugin {
   }
 
   render(config) {
-    this.#logSystem.info("Started form rendering")
-    this.#renderPanelHeader();
+    this.#logSystem.info('Started form rendering');
+    // this.#renderPanelHeader();
     const { fields = [] } = config;
-    this.fieldsProcessing(this.#temp, this.#rootElement, fields);
+    this.fieldsProcessing(this.#temp, this.#configEditorBody, fields);
     this.#renderPanelFooter();
   }
 
   fieldsProcessing(temp, el, fields) {
-    this.#logSystem.debug("Processing fields of object started")
+    this.#logSystem.debug('Processing fields of object started');
 
     for (let field of fields) {
       const { component, propName, propValue, attrs, validation } = field;
@@ -154,16 +154,18 @@ export class ConfigEditorPanel extends PanelPlugin {
 
       if (component === 'array') {
         // Initing nested filling object
-        if (typeof temp[propName] === 'undefined') temp[propName] = [];
+        if (typeof temp[propName] === 'undefined') {
+          temp[propName] = [];
+        }
         this.fieldsProcessing(temp[propName], fieldElement, field.fields);
         el.appendChild(fieldElement);
-        this.#logSystem.debug(`Element of nested fields array attached`)
+        this.#logSystem.debug(`Element of nested fields array attached`);
         continue;
       }
 
       // Custom processing of components
       if (component === 'select') {
-        this.#logSystem.debug(`Filling of select "item" slot started`)
+        this.#logSystem.debug(`Filling of select "item" slot started`);
 
         // Options of select can be is method (for generation select options by function)
         // Function should return array of fields
@@ -179,7 +181,7 @@ export class ConfigEditorPanel extends PanelPlugin {
             fieldElement.appendChild(optionElement);
           }
         }
-        this.#logSystem.debug(`Filling of select "item" slot completed`)
+        this.#logSystem.debug(`Filling of select "item" slot completed`);
       }
 
       // If field is form input.
