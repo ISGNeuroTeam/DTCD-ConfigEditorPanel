@@ -57,6 +57,14 @@ export class ConfigEditorPanel extends PanelPlugin {
       guid,
       'createConfigForm'
     );
+
+    this.#eventSystem.subscribe(
+      this.getGUID(this.getSystem('AppGUISystem', '0.1.0')),
+      'AreaClicked',
+      guid,
+      'createConfigForm'
+    );
+
     this.#renderPanelHeader();
   }
 
