@@ -102,6 +102,12 @@ export class ConfigEditorPanel extends PanelPlugin {
 
   createConfigForm(evt) {
     if (this.#watchingMode && this.#guid !== evt.guid) {
+      const focused = this.getInstance(evt.guid);
+
+      if (!focused.getPluginConfig || !focused.getFormSettings) {
+        return;
+      };
+
       this.#focusedPluginInstance = this.getInstance(evt.guid);
       const currentConfig = this.#focusedPluginInstance.getPluginConfig();
       this.#logSystem.debug(`PluginConfig of instance with guid "${evt.guid}" received`)

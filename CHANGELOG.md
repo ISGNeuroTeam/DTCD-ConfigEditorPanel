@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - subsribe to AreaClicked event
+- some checks in `createConfigForm()` method
 
 ## [0.2.0]
 
