@@ -105,7 +105,7 @@ export class ConfigEditorPanel extends PanelPlugin {
       const focused = this.getInstance(evt.guid);
 
       if (!focused.getPluginConfig || !focused.getFormSettings) {
-        return;
+        return this.#renderPanelHeader();
       };
 
       this.#focusedPluginInstance = this.getInstance(evt.guid);
