@@ -1,7 +1,7 @@
 export default {
   object: 'div',
   array: 'div',
-  title: 'h1',
+  title: 'h2',
   subtitle: 'label',
   text: 'base-input',
   number: 'base-input',
