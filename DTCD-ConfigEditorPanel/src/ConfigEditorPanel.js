@@ -1,5 +1,5 @@
 import {
-  PanelPlugin,
+  AppPanelPlugin,
   LogSystemAdapter,
   EventSystemAdapter,
   StyleSystemAdapter,
@@ -8,8 +8,7 @@ import {
 import fieldsMap from './fields-map';
 import { version } from './../package.json';
 
-export class ConfigEditorPanel extends PanelPlugin {
-
+export class ConfigEditorPanel extends AppPanelPlugin {
   #guid;
   #eventSystem;
   #styleSystem;
@@ -32,7 +31,11 @@ export class ConfigEditorPanel extends PanelPlugin {
 
   constructor(guid, selector) {
     super();
-    this.#logSystem = new LogSystemAdapter('0.5.0', guid, ConfigEditorPanel.getRegistrationMeta().name)
+    this.#logSystem = new LogSystemAdapter(
+      '0.5.0',
+      guid,
+      ConfigEditorPanel.getRegistrationMeta().name
+    );
     this.#eventSystem = new EventSystemAdapter('0.4.0', guid);
     this.#eventSystem.registerPluginInstance(this);
     this.#styleSystem = new StyleSystemAdapter('0.4.0');
@@ -49,7 +52,7 @@ export class ConfigEditorPanel extends PanelPlugin {
     this.#temp = {};
     this.#focusedPluginInstance = {};
     this.#watchingMode = true;
-    this.#logSystem.debug("Root element inited")
+    this.#logSystem.debug('Root element inited');
 
     this.#eventSystem.subscribe(
       this.getGUID(this.getSystem('WorkspaceSystem', '0.4.0')),
@@ -80,7 +83,7 @@ export class ConfigEditorPanel extends PanelPlugin {
     labelWatchingEl.innerText = 'Следить за панелями';
     labelWatchingEl.appendChild(checkboxElement);
     this.#rootElement.appendChild(labelWatchingEl);
-    this.#logSystem.debug("Header of panel attached")
+    this.#logSystem.debug('Header of panel attached');
   }
 
   #renderPanelFooter() {
@@ -92,12 +95,12 @@ export class ConfigEditorPanel extends PanelPlugin {
     acceptBtn.style.padding = '10px';
     acceptBtn.style.maxWidth = '150px';
     this.#rootElement.appendChild(acceptBtn);
-    this.#logSystem.debug("Footer of panel attached")
+    this.#logSystem.debug('Footer of panel attached');
   }
 
   setWatchingMode(val) {
     this.#watchingMode = val;
-    this.#logSystem.info(`Watching mode is "${val}"`)
+    this.#logSystem.info(`Watching mode is "${val}"`);
   }
 
   createConfigForm(evt) {
@@ -106,18 +109,18 @@ export class ConfigEditorPanel extends PanelPlugin {
 
       if (!focused.getPluginConfig || !focused.getFormSettings) {
         return this.#renderPanelHeader();
-      };
+      }
 
       this.#focusedPluginInstance = this.getInstance(evt.guid);
       const currentConfig = this.#focusedPluginInstance.getPluginConfig();
-      this.#logSystem.debug(`PluginConfig of instance with guid "${evt.guid}" received`)
+      this.#logSystem.debug(`PluginConfig of instance with guid "${evt.guid}" received`);
       if (currentConfig) this.#temp = currentConfig;
       this.render(this.#focusedPluginInstance.getFormSettings());
     }
   }
 
   render(config) {
-    this.#logSystem.info("Started form rendering")
+    this.#logSystem.info('Started form rendering');
     this.#renderPanelHeader();
     const { fields = [] } = config;
     this.fieldsProcessing(this.#temp, this.#rootElement, fields);
@@ -125,11 +128,11 @@ export class ConfigEditorPanel extends PanelPlugin {
   }
 
   fieldsProcessing(temp, el, fields) {
-    this.#logSystem.debug("Processing fields of object started")
+    this.#logSystem.debug('Processing fields of object started');
 
     for (let field of fields) {
-      const { component, propName, propValue, attrs, validation } = field;
-      this.#logSystem.debug(`Generating field with name "${propName}" and type "${component}"`)
+      const { component, propName, propValue, attrs, validation, handler, content } = field;
+      this.#logSystem.debug(`Generating field with name "${propName}" and type "${component}"`);
 
       // Element of form field
       const fieldElement = document.createElement(fieldsMap[component]);
@@ -141,7 +144,7 @@ export class ConfigEditorPanel extends PanelPlugin {
             fieldElement.setAttribute(key, attrs[key]);
           }
         }
-        this.#logSystem.debug(`Attributes of element setted`)
+        this.#logSystem.debug(`Attributes of element setted`);
       }
 
       // Nested fields
@@ -151,7 +154,7 @@ export class ConfigEditorPanel extends PanelPlugin {
 
         this.fieldsProcessing(temp[propName], fieldElement, field.fields);
         el.appendChild(fieldElement);
-        this.#logSystem.debug(`Element of nested object attached`)
+        this.#logSystem.debug(`Element of nested object attached`);
         continue;
       }
 
@@ -160,13 +163,13 @@ export class ConfigEditorPanel extends PanelPlugin {
         if (typeof temp[propName] === 'undefined') temp[propName] = [];
         this.fieldsProcessing(temp[propName], fieldElement, field.fields);
         el.appendChild(fieldElement);
-        this.#logSystem.debug(`Element of nested fields array attached`)
+        this.#logSystem.debug(`Element of nested fields array attached`);
         continue;
       }
 
       // Custom processing of components
       if (component === 'select') {
-        this.#logSystem.debug(`Filling of select "item" slot started`)
+        this.#logSystem.debug(`Filling of select "item" slot started`);
 
         // Options of select can be is method (for generation select options by function)
         // Function should return array of fields
@@ -182,19 +185,19 @@ export class ConfigEditorPanel extends PanelPlugin {
             fieldElement.appendChild(optionElement);
           }
         }
-        this.#logSystem.debug(`Filling of select "item" slot completed`)
+        this.#logSystem.debug(`Filling of select "item" slot completed`);
       }
 
-      // If field is form input.
-      // Main sign that field is form field - propName.
       if (typeof propName !== 'undefined') {
+        // If field is form input.
+        // Main sign that field is form field - propName.
         // Setting "input" event listener
-        this.#logSystem.debug("Genereting of form field started")
+        this.#logSystem.debug('Genereting of form field started');
         fieldElement.addEventListener('input', e => {
           if (typeof e.target.value === 'undefined') temp[propName] = e.value;
           else temp[propName] = e.target.value;
         });
-        this.#logSystem.debug('Inited "input" event listener')
+        this.#logSystem.debug('Inited "input" event listener');
 
         // Preset value to input
         if (typeof propValue !== 'undefined') fieldElement.value = propValue;
@@ -203,16 +206,23 @@ export class ConfigEditorPanel extends PanelPlugin {
         // Set validation method to field
         if (typeof validation !== 'undefined')
           fieldElement.validation = validation.bind(this, this.#temp, propName);
-        this.#logSystem.debug('Form field inited')
+        this.#logSystem.debug('Form field inited');
       } else {
-        this.#logSystem.debug("Field isn't form field")
+        this.#logSystem.debug("Field isn't form field");
         fieldElement.textContent = propValue;
       }
 
       el.appendChild(fieldElement);
-      fieldElement.dispatchEvent(new Event('input'));
-      this.#logSystem.debug("Form fields of object are created")
+
+      if (handler) {
+        fieldElement.addEventListener(handler.event, handler.callback);
+      }
+
+      // if (content) {
+      //   fieldElement.innerHTML = content;
+      // }
+      // fieldElement.dispatchEvent(new Event('input'));
+      this.#logSystem.debug('Form fields of object are created');
     }
   }
-
 }
