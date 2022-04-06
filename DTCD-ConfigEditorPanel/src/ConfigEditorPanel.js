@@ -50,7 +50,6 @@ export class ConfigEditorPanel extends PanelPlugin {
 
     // Root element
     this.#rootElement = document.querySelector(selector);
-    this.#styleSystem.setVariablesToElement(this.#rootElement, this.#styleSystem.getCurrentTheme());
     this.#rootElement.classList.add('ConfigEditorPanel');
     this.#rootElement.innerHTML = '';
 
@@ -118,14 +117,24 @@ export class ConfigEditorPanel extends PanelPlugin {
       this.#trackedPanelName.textContent = evt.guid;
 
       this.#focusedPluginInstance = this.getInstance(evt.guid);
-      const currentConfig = this.#focusedPluginInstance.getPluginConfig();
+      try {
+        const currentConfig = this.#focusedPluginInstance.getPluginConfig();
+        if (currentConfig) {
+          this.#configFocusedPlugin = currentConfig;
+        }
 
-      this.#logSystem.debug(`PluginConfig of instance with guid "${evt.guid}" received`);
+        this.#logSystem.debug(`PluginConfig of instance with guid "${evt.guid}" received`);
+      } catch (error) {}
 
-      if (currentConfig) {
-        this.#configFocusedPlugin = currentConfig;
+      let settingsFocusedPlugin;
+      try {
+        settingsFocusedPlugin = this.#focusedPluginInstance.getFormSettings();
+        this.#logSystem.debug(`PluginFormSettings of instance with guid "${evt.guid}" received`);
+      } catch (error) {}
+
+      if (settingsFocusedPlugin) {
+        this.render(this.#focusedPluginInstance.getFormSettings());
       }
-      this.render(this.#focusedPluginInstance.getFormSettings());
     }
   }
 
