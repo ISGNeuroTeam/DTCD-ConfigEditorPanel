@@ -159,12 +159,21 @@ export class ConfigEditorPanel extends PanelPlugin {
       // Element of form field
       const fieldElement = document.createElement(fieldsMap[component]);
 
-      if (component === 'title') {
-        fieldElement.classList.add('SectionTitle');
-      }
+      switch (component) {
+        case 'title':
+          fieldElement.classList.add('SectionTitle');
+          break;
 
-      if (component === 'divider') {
-        fieldElement.classList.add('Divider');
+        case 'divider':
+          fieldElement.classList.add('Divider');
+          break;
+
+        case 'subtitle':
+          fieldElement.classList.add('TextLabel');
+          break;
+
+        default:
+          break;
       }
 
       // Attributes
