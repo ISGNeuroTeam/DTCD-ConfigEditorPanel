@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - build process in order to make directory name with current version of plugin
+- appearance of some generated elements
 
 ## [0.1.0]
 
