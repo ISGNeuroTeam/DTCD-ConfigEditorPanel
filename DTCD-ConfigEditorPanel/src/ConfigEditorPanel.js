@@ -140,21 +140,33 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         settingsFocusedPlugin = this.#focusedPluginInstance.getFormSettings();
         this.#logSystem.debug(`PluginFormSettings of instance with guid "${evt.guid}" received`);
       } catch (error) {}
-
-      if (settingsFocusedPlugin) {
-        this.render(this.#focusedPluginInstance.getFormSettings());
-      }
+      
+      this.render(settingsFocusedPlugin);
     }
   }
 
   render(config) {
     this.#logSystem.info('Started form rendering');
 
-    const { fields = [] } = config;
-    this.#configEditorBody.innerHTML = '';
-    this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
+    if (config) {
+      this.#configEditorBody.innerHTML = '';
+      
+      const { fields = [] } = config;
+      this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
+      this.#renderPanelFooter();
+    } else {
+      this.#configEditorBody.innerHTML = `
+        <div class="ComponentWrapper" style="text-align: center;">
+          Настройки для данной панели отсутствуют.
+        </div>
+      `;
+      if (this.#configEditorFooter) {
+        this.#configEditorFooter.remove();
+        this.#configEditorFooter = null;
+      }
+    }
 
-    this.#renderPanelFooter();
+    this.#logSystem.info('Ended form rendering');
   }
 
   #fieldsProcessing(configFocusedPlugin, targetContainer, fields, isRecursiveCall = false) {
