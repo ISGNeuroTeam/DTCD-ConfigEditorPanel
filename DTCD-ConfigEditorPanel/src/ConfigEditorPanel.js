@@ -279,7 +279,6 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         targetContainer.appendChild(fieldElement);
       }
 
-      fieldElement.dispatchEvent(new Event('input'));
       this.#logSystem.debug('Form fields of object are created');
     }
   }
