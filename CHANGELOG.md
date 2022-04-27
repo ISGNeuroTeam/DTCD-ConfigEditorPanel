@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - subsribe to AreaClicked event
 - some checks in `createConfigForm()` method
 
+### Changed
+
+- UI design
+
 ## [0.2.0]
 
 ### Added
