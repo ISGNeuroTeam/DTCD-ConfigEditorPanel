@@ -148,7 +148,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
   render(config) {
     this.#logSystem.info('Started form rendering');
 
-    if (config) {
+    if (config?.fields?.length) {
       this.#configEditorBody.innerHTML = '';
       
       const { fields = [] } = config;
