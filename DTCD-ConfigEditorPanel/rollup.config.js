@@ -1,3 +1,4 @@
+import html from 'rollup-plugin-html';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import styles from 'rollup-plugin-styles';
@@ -20,8 +21,10 @@ const plugins = [
     browser: true,
   }),
   styles({
-    mode: 'inject',
-    modules: true,
+    mode:['inject',()=>''],
+  }),
+  html({
+    include: ['**/*.html', '**/*.svg'],
   }),
   babel({
     babelHelpers: 'bundled',
