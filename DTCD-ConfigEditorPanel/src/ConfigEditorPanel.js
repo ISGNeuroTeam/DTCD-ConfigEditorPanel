@@ -14,7 +14,6 @@ import HeaderHtml from './templates/Header.html';
 import FooterHtml from './templates/Footer.html';
 
 export class ConfigEditorPanel extends AppPanelPlugin {
-
   #guid;
   #eventSystem;
   #styleSystem;
@@ -48,7 +47,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     );
     this.#eventSystem = new EventSystemAdapter('0.4.0', guid);
     this.#eventSystem.registerPluginInstance(this);
-    this.#styleSystem = new StyleSystemAdapter('0.4.0');
+    this.#styleSystem = new StyleSystemAdapter('0.5.0');
 
     this.#guid = guid;
 
@@ -67,7 +66,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.debug('Root element inited');
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('WorkspaceSystem', '0.4.0')),
+      this.getGUID(this.getSystem('WorkspaceSystem', '0.5.0')),
       'WorkspaceCellClicked',
       guid,
       'createConfigForm'
@@ -140,7 +139,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         settingsFocusedPlugin = this.#focusedPluginInstance.getFormSettings();
         this.#logSystem.debug(`PluginFormSettings of instance with guid "${evt.guid}" received`);
       } catch (error) {}
-      
+
       this.render(settingsFocusedPlugin);
     }
   }
@@ -150,7 +149,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
     if (config?.fields?.length) {
       this.#configEditorBody.innerHTML = '';
-      
+
       const { fields = [] } = config;
       this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
       this.#renderPanelFooter();
@@ -210,7 +209,8 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       // Nested fields
       if (component === 'object') {
         // Initing nested filling object
-        if (typeof configFocusedPlugin[propName] === 'undefined') configFocusedPlugin[propName] = {};
+        if (typeof configFocusedPlugin[propName] === 'undefined')
+          configFocusedPlugin[propName] = {};
 
         this.#fieldsProcessing(configFocusedPlugin[propName], fieldElement, field.fields, true);
         targetContainer.appendChild(fieldElement);
@@ -235,7 +235,8 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
         // Options of select can be is method (for generation select options by function)
         // Function should return array of fields
-        if (typeof field.options === 'function') field.options = field.options(this.#configFocusedPlugin);
+        if (typeof field.options === 'function')
+          field.options = field.options(this.#configFocusedPlugin);
 
         if (Array.isArray(field.options)) {
           for (let { label, value } of field.options) {
@@ -265,7 +266,8 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
         // Preset value to input
         if (typeof propValue !== 'undefined') fieldElement.value = propValue;
-        if (typeof configFocusedPlugin[propName] !== 'undefined') fieldElement.value = configFocusedPlugin[propName];
+        if (typeof configFocusedPlugin[propName] !== 'undefined')
+          fieldElement.value = configFocusedPlugin[propName];
 
         // Set validation method to field
         if (typeof validation !== 'undefined') {

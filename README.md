@@ -16,46 +16,23 @@ This method returns needed for form creating object. In this object should be pr
 
 Example:
 
-`
-{ 
-	fields:[ 
-		{ 
-			component: 'text', 
-			propName: 'title', 
-			propValue: 'name'
-			attrs: { 
-				label: 'Title of plugin', 
-			}
-			validation:(val)=>{
-				if(val[0]===val[0].toUpperCase()) return {isValid:true}
-				else return {isValid:false,message:"First letter must be capitalized"}
-				}
-		},{ 
-			component: 'datasource', 
-			propName: 'dataSource', 
-			attrs: { 
-				label: 'ID of created DataSource', 
-				placeholder: 'Select datasource', 
-				required: true
-			} 
-		}
-	] 
-}
-`
+`{ fields:[ { component: 'text', propName: 'title', propValue: 'name' attrs: { label: 'Title of plugin', } validation:(val)=>{ if(val[0]===val[0].toUpperCase()) return {isValid:true} else return {isValid:false,message:"First letter must be capitalized"} } },{ component: 'datasource', propName: 'dataSource', attrs: { label: 'ID of created DataSource', placeholder: 'Select datasource', required: true } } ] }`
+
 ### Field object properties
-| property | type | description
-|---|---|---|
-|component|string|Type of field in generated form (key in field map)
-|propName|string|Key of settings object
-|propValue|any|Default value of field
-|attrs|object|Attributes of DOM element
-|validation|function|Function that will be execute by 'validate' method of DOM element field form
-|fields|Array|Array of field object for fields with 'array' and 'object' component property value. Uses for nested fields of property.
+
+| property   | type     | description                                                                                                              |
+| ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| component  | string   | Type of field in generated form (key in field map)                                                                       |
+| propName   | string   | Key of settings object                                                                                                   |
+| propValue  | any      | Default value of field                                                                                                   |
+| attrs      | object   | Attributes of DOM element                                                                                                |
+| validation | function | Function that will be execute by 'validate' method of DOM element field form                                             |
+| fields     | Array    | Array of field object for fields with 'array' and 'object' component property value. Uses for nested fields of property. |
 
 ### Prerequisites
 
 - [node.js](https://nodejs.org/en/) LTS version 14.x.x
-- [DTCD](https://github.com/ISGNeuroTeam/DTCD) v0.4.0
+- [DTCD](https://github.com/ISGNeuroTeam/DTCD) v0.5.0
 - `make` utility
 
 ### Building
