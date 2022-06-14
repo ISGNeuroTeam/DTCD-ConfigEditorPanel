@@ -277,7 +277,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         this.#logSystem.debug('Form field inited');
       } else {
         this.#logSystem.debug(`Field isn't form field`);
-        fieldElement.textContent = propValue;
+        fieldElement.innerHTML += propValue;
       }
 
       if (handler) {
