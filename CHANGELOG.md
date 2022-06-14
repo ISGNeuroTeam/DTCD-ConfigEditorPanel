@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- addition of text to form elements
+- ability to customize the content of form elements
 
 ## [0.3.0]
 
