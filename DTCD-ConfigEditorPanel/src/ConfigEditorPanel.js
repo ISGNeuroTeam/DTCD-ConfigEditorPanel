@@ -172,7 +172,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.debug('Processing fields of object started');
 
     for (let field of fields) {
-      const { component, propName, innerText, attrs, validation, handler } = field;
+      const { component, propName, innerText, propValue, attrs, validation, handler } = field;
 
       this.#logSystem.debug(`Generating field with name "${propName}" and type "${component}"`);
 
@@ -277,6 +277,10 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         this.#logSystem.debug('Form field inited');
       } else {
         this.#logSystem.debug(`Field isn't form field`);
+        fieldElement.textContent = propValue;
+      }
+
+      if (innerText) {
         fieldElement.innerHTML += innerText;
       }
 
