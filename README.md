@@ -32,7 +32,7 @@ Example:
 ### Prerequisites
 
 - [node.js](https://nodejs.org/en/) LTS version 14.x.x
-- [DTCD](https://github.com/ISGNeuroTeam/DTCD) v0.5.0
+- [DTCD](https://github.com/ISGNeuroTeam/DTCD) v0.6.0
 - `make` utility
 
 ### Building
