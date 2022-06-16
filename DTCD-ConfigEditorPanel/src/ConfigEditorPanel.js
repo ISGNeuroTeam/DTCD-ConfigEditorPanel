@@ -172,7 +172,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.debug('Processing fields of object started');
 
     for (let field of fields) {
-      const { component, propName, propValue, attrs, validation, handler } = field;
+      const { component, propName, innerText, propValue, attrs, validation, handler } = field;
 
       this.#logSystem.debug(`Generating field with name "${propName}" and type "${component}"`);
 
@@ -199,7 +199,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       // Attributes
       if (typeof attrs !== 'undefined') {
         for (let key in attrs) {
-          if (!['component', 'propName', 'propValue', 'attrs'].includes(key)) {
+          if (!['component', 'propName', 'innerText', 'attrs'].includes(key)) {
             fieldElement.setAttribute(key, attrs[key]);
           }
         }
@@ -265,7 +265,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         this.#logSystem.debug('Inited "input" event listener');
 
         // Preset value to input
-        if (typeof propValue !== 'undefined') fieldElement.value = propValue;
+        if (typeof innerText !== 'undefined') fieldElement.value = innerText;
         if (typeof configFocusedPlugin[propName] !== 'undefined')
           fieldElement.value = configFocusedPlugin[propName];
 
@@ -278,6 +278,10 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       } else {
         this.#logSystem.debug(`Field isn't form field`);
         fieldElement.textContent = propValue;
+      }
+
+      if (innerText) {
+        fieldElement.innerHTML += innerText;
       }
 
       if (handler) {
