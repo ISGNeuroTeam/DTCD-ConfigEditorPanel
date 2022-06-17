@@ -148,17 +148,17 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.info('Started form rendering');
 
     if (config?.fields?.length) {
-      this.#configEditorBody.innerHTML = '';
+      // this.#configEditorBody.innerHTML = '';
 
       const { fields = [] } = config;
-      this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
+      // this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
       this.#renderPanelFooter();
     } else {
-      this.#configEditorBody.innerHTML = `
-        <div class="ComponentWrapper" style="text-align: center;">
-          Настройки для данной панели отсутствуют.
-        </div>
-      `;
+      // this.#configEditorBody.innerHTML = `
+      //   <div class="ComponentWrapper" style="text-align: center;">
+      //     Настройки для данной панели отсутствуют.
+      //   </div>
+      // `;
       if (this.#configEditorFooter) {
         this.#configEditorFooter.remove();
         this.#configEditorFooter = null;
@@ -199,7 +199,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       // Attributes
       if (typeof attrs !== 'undefined') {
         for (let key in attrs) {
-          if (!['component', 'propName', 'innerText', 'attrs'].includes(key)) {
+          if (!['component', 'propName', 'attrs'].includes(key)) {
             fieldElement.setAttribute(key, attrs[key]);
           }
         }
@@ -265,7 +265,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         this.#logSystem.debug('Inited "input" event listener');
 
         // Preset value to input
-        if (typeof innerText !== 'undefined') fieldElement.value = innerText;
+        if (typeof propValue !== 'undefined') fieldElement.value = propValue;
         if (typeof configFocusedPlugin[propName] !== 'undefined')
           fieldElement.value = configFocusedPlugin[propName];
 
@@ -277,7 +277,9 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         this.#logSystem.debug('Form field inited');
       } else {
         this.#logSystem.debug(`Field isn't form field`);
-        fieldElement.textContent = propValue;
+        if (propValue) {
+          fieldElement.innerHTML += propValue;
+        }
       }
 
       if (innerText) {
