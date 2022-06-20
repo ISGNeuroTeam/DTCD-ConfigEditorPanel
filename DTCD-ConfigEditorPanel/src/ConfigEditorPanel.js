@@ -155,7 +155,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       this.#renderPanelFooter();
     } else {
       // this.#configEditorBody.innerHTML = `
-      //   <div class="ComponentWrapper" style="text-align: center;">
+      //   <div class="RowWrapper" style="text-align: center;">
       //     Настройки для данной панели отсутствуют.
       //   </div>
       // `;
@@ -292,7 +292,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
       if (!isRecursiveCall && component !== 'divider') {
         const newSection = document.createElement('div');
-        newSection.className = 'ComponentWrapper';
+        newSection.className = 'RowWrapper';
         newSection.appendChild(fieldElement);
         targetContainer.appendChild(newSection);
       } else {

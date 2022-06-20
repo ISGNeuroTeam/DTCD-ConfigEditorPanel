@@ -19,15 +19,8 @@
     margin-bottom: var(--padding_main);
   }
 
-  .ComponentWrapper {
-    display: flex;
-    padding: 0 var(--padding_main) var(--padding_main);
-    flex-direction: column;
-  }
-
   .RowWrapper {
     padding: 0 var(--padding_main) var(--padding_main);
-    flex: 1 0;
 
     .ItemRow {
       display: grid;
