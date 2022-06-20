@@ -33,23 +33,23 @@
       display: grid;
       gap: 10px;
 
-      &.Col-2 {
+      &.col-2 {
         grid-template-columns: 1fr 1fr;
       }
 
-      &.Col-3 {
+      &.col-3 {
         grid-template-columns: 1fr 1fr 1fr;
       }
 
-      &.Col-2-8 {
+      &.col-2-8 {
         grid-template-columns: 2fr 8fr;
       }
 
-      &.Col-8-2 {
+      &.col-8-2 {
         grid-template-columns: 8fr 2fr;
       }
 
-      &.Col-2-2-1 {
+      &.col-2-2-1 {
         grid-template-columns: 3fr 3fr 1fr;
       } 
 
