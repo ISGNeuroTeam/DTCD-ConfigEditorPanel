@@ -73,7 +73,8 @@
       }
 
       &.size_50 {
-        flex: 1 0 0%;
+        flex: 0 0 50%;
+        max-width: 50%;
       }
 
       &.size_60 {
