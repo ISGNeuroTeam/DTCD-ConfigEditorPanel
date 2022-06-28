@@ -148,17 +148,17 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.info('Started form rendering');
 
     if (config?.fields?.length) {
-      // this.#configEditorBody.innerHTML = '';
+      this.#configEditorBody.innerHTML = '';
 
       const { fields = [] } = config;
-      // this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
+      this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
       this.#renderPanelFooter();
     } else {
-      // this.#configEditorBody.innerHTML = `
-      //   <div class="RowWrapper" style="text-align: center;">
-      //     Настройки для данной панели отсутствуют.
-      //   </div>
-      // `;
+      this.#configEditorBody.innerHTML = `
+        <div class="ComponentContainer" style="text-align: center;">
+          Настройки для данной панели отсутствуют.
+        </div>
+      `;
       if (this.#configEditorFooter) {
         this.#configEditorFooter.remove();
         this.#configEditorFooter = null;
@@ -172,7 +172,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.debug('Processing fields of object started');
 
     for (let field of fields) {
-      const { component, propName, innerText, propValue, attrs, validation, handler } = field;
+      const { component, propName, innerText, propValue, attrs, validation, handler, panelRow, column } = field;
 
       this.#logSystem.debug(`Generating field with name "${propName}" and type "${component}"`);
 
@@ -291,15 +291,55 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       }
 
       if (!isRecursiveCall && component !== 'divider') {
-        const newSection = document.createElement('div');
-        newSection.className = 'RowWrapper';
-        newSection.appendChild(fieldElement);
-        targetContainer.appendChild(newSection);
+        const fieldContainers = this.#createFieldWrapper(fieldElement, panelRow, column);
+        fieldContainers && targetContainer.appendChild(fieldContainers);
       } else {
         targetContainer.appendChild(fieldElement);
       }
 
       this.#logSystem.debug('Form fields of object are created');
+    }
+  }
+
+  #createFieldWrapper(fieldElement, panelRow, column) {
+    if (panelRow) {
+      let newSection;
+      let componentRow = document.querySelector('.ComponentRow#' + panelRow);
+
+      if (!componentRow) { 
+        componentRow = document.createElement('div');
+        componentRow.className = 'ComponentRow';
+        componentRow.id = panelRow; 
+        newSection = document.createElement('div');
+        newSection.className = 'ComponentContainer';
+        newSection.appendChild(componentRow);
+      }
+
+      const newColumn = document.createElement('div');
+      newColumn.classList.add('Column');
+      newColumn.appendChild(fieldElement);
+      componentRow.appendChild(newColumn);
+      
+      switch(column) {
+        case 'auto': 
+        case '10': 
+        case '20': 
+        case '30': 
+        case '40': 
+        case '50': 
+        case '60': 
+        case '70': 
+        case '80':   
+        case '90': 
+          newColumn.classList.add('size_' + column)
+          break;
+      }
+      return newSection;
+    } else { 
+      const newSection = document.createElement('div');
+      newSection.className = 'ComponentContainer';
+      newSection.appendChild(fieldElement); 
+      return newSection;
     }
   }
 }
