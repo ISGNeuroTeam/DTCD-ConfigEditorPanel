@@ -73,6 +73,13 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     );
 
     this.#eventSystem.subscribe(
+      this.getGUID(this.findInstances('WorkspacePanel', '0.5.0')[0]),
+      'WorkspaceDeleted',
+      guid,
+      'clearConfigForm'
+    );
+
+    this.#eventSystem.subscribe(
       this.getGUID(this.getSystem('AppGUISystem', '0.1.0')),
       'AreaClicked',
       guid,
@@ -142,6 +149,10 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
       this.render(settingsFocusedPlugin);
     }
+  }
+
+  clearConfigForm() {
+    this.render();
   }
 
   render(config) {
