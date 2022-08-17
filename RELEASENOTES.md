@@ -1,0 +1,5 @@
+# [0.6.0] - Config form closes selected element while deleting it
+
+### Added
+
+- Config form closes selected element while deleting it
