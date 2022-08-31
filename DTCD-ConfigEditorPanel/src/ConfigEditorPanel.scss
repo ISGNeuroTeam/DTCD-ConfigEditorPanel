@@ -18,6 +18,21 @@
   .Header,
   .Footer {
     padding: var(--padding_main);
+    display: flex;
+    flex: 0;
+    flex-direction: column;
+  }
+
+  .Body {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    height: 200px;
+    overflow: auto;
+  }
+
+  .Footer {
+    align-items: center;
   }
 
   .Header,
@@ -106,7 +121,7 @@
   }
 
   .SectionTitle {
-    font-weight: 600; 
+    font-weight: 600;
     font-size: 15px;
     line-height: 1.2;
     margin: 0;
@@ -136,7 +151,7 @@
 
     .Item {
       display: flex;
-      align-items: center; 
+      align-items: center;
       width: 100%;
 
       &:first-of-type {
@@ -146,7 +161,7 @@
       & > .LabelName {
         padding-right: 8px;
       }
-    }  
+    }
   }
 
   .Footer {
