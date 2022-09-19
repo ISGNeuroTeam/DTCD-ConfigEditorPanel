@@ -317,10 +317,10 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       let newSection;
       let componentRow = document.querySelector('.ComponentRow#' + panelRow);
 
-      if (!componentRow) { 
+      if (!componentRow) {
         componentRow = document.createElement('div');
         componentRow.className = 'ComponentRow';
-        componentRow.id = panelRow; 
+        componentRow.id = panelRow;
         newSection = document.createElement('div');
         newSection.className = 'ComponentContainer';
         newSection.appendChild(componentRow);
@@ -330,26 +330,26 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       newColumn.classList.add('Column');
       newColumn.appendChild(fieldElement);
       componentRow.appendChild(newColumn);
-      
+
       switch(column) {
-        case 'auto': 
-        case '10': 
-        case '20': 
-        case '30': 
-        case '40': 
-        case '50': 
-        case '60': 
-        case '70': 
-        case '80':   
-        case '90': 
+        case 'auto':
+        case '10':
+        case '20':
+        case '30':
+        case '40':
+        case '50':
+        case '60':
+        case '70':
+        case '80':
+        case '90':
           newColumn.classList.add('size_' + column)
           break;
       }
       return newSection;
-    } else { 
+    } else {
       const newSection = document.createElement('div');
       newSection.className = 'ComponentContainer';
-      newSection.appendChild(fieldElement); 
+      newSection.appendChild(fieldElement);
       return newSection;
     }
   }
