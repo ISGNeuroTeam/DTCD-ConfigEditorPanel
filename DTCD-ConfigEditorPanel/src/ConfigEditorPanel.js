@@ -66,21 +66,21 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.debug('Root element inited');
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('WorkspaceSystem', '0.5.0')),
+      this.getGUID(Application.autocomplete.WorkspaceSystem),
       'WorkspaceCellClicked',
       guid,
       'createConfigForm'
     );
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.findInstances('WorkspacePanel', '0.5.0')[0]),
+      this.getGUID(this.findInstances('WorkspacePanel')[0]),
       'WorkspaceDeleted',
       guid,
       'clearConfigForm'
     );
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('AppGUISystem', '0.1.0')),
+      this.getGUID(Application.autocomplete.AppGUISystem),
       'AreaClicked',
       guid,
       'createConfigForm'
