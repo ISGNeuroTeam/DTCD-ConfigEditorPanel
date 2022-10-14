@@ -129,7 +129,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
   createConfigForm(evt) {
     if (this.#watchingMode && this.#guid !== evt.guid) {
-      this.#trackedPanelName.textContent = evt.guid;
+      this.#trackedPanelName.textContent = `${evt.guid} [${evt.version}]`;
 
       this.#focusedPluginInstance = this.getInstance(evt.guid);
       try {
