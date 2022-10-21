@@ -117,6 +117,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     const acceptBtn = this.#configEditorFooter.querySelector('.SubmitBtn-js');
 
     acceptBtn.addEventListener('click', () => {
+      console.log(this.#focusedPluginInstance, this.#configFocusedPlugin);
       this.#focusedPluginInstance.setFormSettings(this.#configFocusedPlugin);
     });
     this.#logSystem.debug('Footer of panel attached');
@@ -129,9 +130,17 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
   createConfigForm(evt) {
     if (this.#watchingMode && this.#guid !== evt.guid) {
-      this.#trackedPanelName.textContent = `${evt.guid} [${evt.version}]`;
-
       this.#focusedPluginInstance = this.getInstance(evt.guid);
+
+      let guid = evt.guid;
+      const meta = this.#focusedPluginInstance.constructor.getRegistrationMeta();
+
+      if (meta.type === 'core') {
+        guid = evt.guid.split( '_', 1).join('');
+      }
+
+      this.#trackedPanelName.textContent = `${guid} [${meta.version}]`;
+      
       try {
         const currentConfig = this.#focusedPluginInstance.getPluginConfig();
         if (currentConfig) {
