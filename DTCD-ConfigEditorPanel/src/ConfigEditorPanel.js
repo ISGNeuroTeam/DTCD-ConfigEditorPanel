@@ -115,11 +115,10 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#configEditorFooter.innerHTML = FooterHtml;
 
     const acceptBtn = this.#configEditorFooter.querySelector('.SubmitBtn-js');
-
     acceptBtn.addEventListener('click', () => {
-      console.log(this.#focusedPluginInstance, this.#configFocusedPlugin);
       this.#focusedPluginInstance.setFormSettings(this.#configFocusedPlugin);
     });
+
     this.#logSystem.debug('Footer of panel attached');
   }
 
