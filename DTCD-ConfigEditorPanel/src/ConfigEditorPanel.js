@@ -66,21 +66,21 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#logSystem.debug('Root element inited');
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('WorkspaceSystem', '0.5.0')),
+      this.getGUID(Application.autocomplete.WorkspaceSystem),
       'WorkspaceCellClicked',
       guid,
       'createConfigForm'
     );
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.findInstances('WorkspacePanel', '0.5.0')[0]),
+      this.getGUID(this.findInstances('WorkspacePanel')[0]),
       'WorkspaceDeleted',
       guid,
       'clearConfigForm'
     );
 
     this.#eventSystem.subscribe(
-      this.getGUID(this.getSystem('AppGUISystem', '0.1.0')),
+      this.getGUID(Application.autocomplete.AppGUISystem),
       'AreaClicked',
       guid,
       'createConfigForm'
@@ -115,10 +115,10 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#configEditorFooter.innerHTML = FooterHtml;
 
     const acceptBtn = this.#configEditorFooter.querySelector('.SubmitBtn-js');
-
     acceptBtn.addEventListener('click', () => {
       this.#focusedPluginInstance.setFormSettings(this.#configFocusedPlugin);
     });
+
     this.#logSystem.debug('Footer of panel attached');
   }
 
@@ -129,9 +129,17 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
   createConfigForm(evt) {
     if (this.#watchingMode && this.#guid !== evt.guid) {
-      this.#trackedPanelName.textContent = evt.guid;
-
       this.#focusedPluginInstance = this.getInstance(evt.guid);
+
+      let guid = evt.guid;
+      const meta = this.#focusedPluginInstance.constructor.getRegistrationMeta();
+
+      if (meta.type === 'core') {
+        guid = evt.guid.split( '_', 1).join('');
+      }
+
+      this.#trackedPanelName.textContent = `${guid} [${meta.version}]`;
+      
       try {
         const currentConfig = this.#focusedPluginInstance.getPluginConfig();
         if (currentConfig) {
