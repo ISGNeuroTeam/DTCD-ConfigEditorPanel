@@ -1,3 +1,9 @@
+# [0.9.0]
+
+## Added
+
+- word wrap in very long titles
+
 # [0.8.0]
 
 ## Added
