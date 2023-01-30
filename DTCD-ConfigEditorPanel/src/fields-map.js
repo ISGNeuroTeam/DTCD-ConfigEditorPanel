@@ -15,6 +15,7 @@ export default {
   button: 'base-button',
   checkbox: 'base-checkbox',
   'gauge-segments': 'gauge-segment-builder',
+  'file-loader': 'base-file-loader',
 };
 
 // TODO: research - default значения для атрибутов относительно типа поля в форме
