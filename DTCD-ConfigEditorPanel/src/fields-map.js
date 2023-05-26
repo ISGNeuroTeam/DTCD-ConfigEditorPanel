@@ -14,7 +14,21 @@ export default {
   colorpicker: 'base-color-picker',
   button: 'base-button',
   checkbox: 'base-checkbox',
+  chip: 'base-chip',
+  iconbutton: 'base-icon-button',
+  label: 'base-label',
+  link: 'base-link',
+  range: 'base-range',
+  radio: 'base-radio',
+  radiogroup: 'base-radio-group',
+  heading: 'base-heading',
+  dropdown: 'base-dropdown',
+  tabs: 'base-tabs',
+  datetimepicker: 'date-time-picker',
+  expander: 'base-expander',
+  expandergroup: 'base-expander-group',
   'gauge-segments': 'gauge-segment-builder',
+  'file-loader': 'base-file-loader',
 };
 
 // TODO: research - default значения для атрибутов относительно типа поля в форме

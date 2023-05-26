@@ -1,3 +1,23 @@
+# [0.10.0]
+
+## Added
+
+- support of new components in list
+  - `file-loader`
+  - `chip`
+  - `iconbutton`
+  - `label`
+  - `link`
+  - `range`
+  - `radio`
+  - `radiogroup`
+  - `heading`
+  - `dropdown`
+  - `tabs`
+  - `datetimepicker`
+  - `expander`
+  - `expandergroup`
+
 # [0.9.0]
 
 ## Added
