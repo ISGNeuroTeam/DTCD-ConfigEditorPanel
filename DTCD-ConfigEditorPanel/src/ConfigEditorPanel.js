@@ -102,6 +102,10 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     checkboxWatcher.addEventListener('change', e => {
       this.setWatchingMode(e.target.checked);
     });
+
+    const closePanelBtn = this.#rootElement.querySelector('.ClosePanelBtn-js');
+    closePanelBtn && closePanelBtn.addEventListener('click', this.#handleCloseBtnClick);
+
     this.#logSystem.debug('Header of panel attached');
   }
 
@@ -360,5 +364,9 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       newSection.appendChild(fieldElement);
       return newSection;
     }
+  }
+
+  #handleCloseBtnClick = () => {
+    window.Application.autocomplete.AppGUISystem.toggleSidebar('right', false);
   }
 }

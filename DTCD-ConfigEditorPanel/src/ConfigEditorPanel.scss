@@ -41,6 +41,25 @@
     margin-bottom: var(--padding_main);
   }
 
+  .ClosePanelBtnWrapper {
+    display: inline-flex;
+    height: 22px;
+  }
+
+  .ClosePanelBtn {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    color: var(--text_main);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    width: 22px;
+    cursor: pointer;
+  }
+
   .ComponentContainer {
     display: flex;
     flex-direction: column;
@@ -110,6 +129,10 @@
       &.size_90 {
         flex: 0 0 90%;
         max-width: 90%;
+      }
+
+      &.align_top {
+        align-self: flex-start;
       }
     }
   }
