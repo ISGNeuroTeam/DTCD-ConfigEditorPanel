@@ -12,6 +12,7 @@ import styles from './ConfigEditorPanel.scss';
 import MainHtml from './templates/Main.html';
 import HeaderHtml from './templates/Header.html';
 import FooterHtml from './templates/Footer.html';
+import NoSettingsHtml from './templates/NoSettings.html';
 
 export class ConfigEditorPanel extends AppPanelPlugin {
   #guid;
@@ -177,11 +178,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
       this.#renderPanelFooter();
     } else {
-      this.#configEditorBody.innerHTML = `
-        <div class="ComponentContainer" style="text-align: center;">
-          Настройки для данной панели отсутствуют.
-        </div>
-      `;
+      this.#configEditorBody.innerHTML = NoSettingsHtml;
       if (this.#configEditorFooter) {
         this.#configEditorFooter.remove();
         this.#configEditorFooter = null;
