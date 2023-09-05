@@ -69,15 +69,12 @@
   .ComponentRow {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -5px;
-    margin-left: -5px;
-    row-gap: 10px;
+    gap: 10px;
+    width: 100%;
 
     .Column {
       flex: 1 0 0%;
       align-self: flex-end;
-      padding-right: 5px;
-      padding-left: 5px;
       flex-shrink: 0;
       max-width: 100%;
 
