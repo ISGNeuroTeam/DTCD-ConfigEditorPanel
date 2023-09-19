@@ -307,17 +307,29 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         // Setting "input" event listener
         this.#logSystem.debug('Genereting of form field started');
 
-        fieldElement.addEventListener('input', e => {
-          if (typeof e.target.value === 'undefined') configFocusedPlugin[propName] = e.value;
-          else configFocusedPlugin[propName] = e.target.value;
-        });
+        if (component == 'checkbox' || component == 'radio' || component == 'switch') {
+          fieldElement.addEventListener('change', e => {
+            configFocusedPlugin[propName] = e.target.checked;
+          });
+          this.#logSystem.debug('Inited "change" event listener');
 
-        this.#logSystem.debug('Inited "input" event listener');
+          if (typeof propValue !== 'undefined') fieldElement.checked = propValue;
+          if (typeof configFocusedPlugin[propName] !== 'undefined') {
+            fieldElement.checked = configFocusedPlugin[propName];
+          }
+        } else {
+          fieldElement.addEventListener('input', e => {
+            if (typeof e.target.value === 'undefined') configFocusedPlugin[propName] = e.value;
+            else configFocusedPlugin[propName] = e.target.value;
+          });
+          this.#logSystem.debug('Inited "input" event listener');
 
-        // Preset value to input
-        if (typeof propValue !== 'undefined') fieldElement.value = propValue;
-        if (typeof configFocusedPlugin[propName] !== 'undefined')
-          fieldElement.value = configFocusedPlugin[propName];
+          // Preset value to input
+          if (typeof propValue !== 'undefined') fieldElement.value = propValue;
+          if (typeof configFocusedPlugin[propName] !== 'undefined') {
+            fieldElement.value = configFocusedPlugin[propName];
+          }
+        }
 
         // Set validation method to field
         if (typeof validation !== 'undefined') {
