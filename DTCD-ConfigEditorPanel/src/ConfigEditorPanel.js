@@ -3,6 +3,7 @@ import {
   LogSystemAdapter,
   EventSystemAdapter,
   StyleSystemAdapter,
+  WorkspaceSystemAdapter,
 } from '../../DTCD-SDK/index';
 
 import { version } from './../package.json';
@@ -12,12 +13,15 @@ import styles from './ConfigEditorPanel.scss';
 import MainHtml from './templates/Main.html';
 import HeaderHtml from './templates/Header.html';
 import FooterHtml from './templates/Footer.html';
+import FooterForWidgetsHtml from './templates/FooterForWidgets.html';
+import NoSettingsHtml from './templates/NoSettings.html';
 
 export class ConfigEditorPanel extends AppPanelPlugin {
   #guid;
   #eventSystem;
   #styleSystem;
   #logSystem;
+  #workspaceSystem;
 
   #rootElement;
   #configEditorBody;
@@ -48,6 +52,7 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     this.#eventSystem = new EventSystemAdapter('0.4.0', guid);
     this.#eventSystem.registerPluginInstance(this);
     this.#styleSystem = new StyleSystemAdapter('0.5.0');
+    this.#workspaceSystem = new WorkspaceSystemAdapter('0.17.0');
 
     this.#guid = guid;
 
@@ -102,20 +107,40 @@ export class ConfigEditorPanel extends AppPanelPlugin {
     checkboxWatcher.addEventListener('change', e => {
       this.setWatchingMode(e.target.checked);
     });
+
+    const closePanelBtn = this.#rootElement.querySelector('.ClosePanelBtn-js');
+    closePanelBtn && closePanelBtn.addEventListener('click', this.#handleCloseBtnClick);
+
     this.#logSystem.debug('Header of panel attached');
   }
 
-  #renderPanelFooter() {
+  #renderPanelFooter(renderOptions = {}) {
+    const {
+      guidOfChosenPanel,
+      doRenderDeletePanelBtn,
+    } = renderOptions;
+    
     if (!this.#configEditorFooter) {
       this.#configEditorFooter = document.createElement('div');
       this.#configEditorFooter.className = 'Footer';
       this.#rootElement.appendChild(this.#configEditorFooter);
     }
 
-    this.#configEditorFooter.innerHTML = FooterHtml;
+    if (doRenderDeletePanelBtn) {
+      this.#configEditorFooter.innerHTML = FooterForWidgetsHtml;
+      
+      const deletePanelBtn = this.#configEditorFooter.querySelector('.DeletePanelBtn-js');
+      
+      deletePanelBtn && deletePanelBtn.addEventListener('click', () => {
+        this.#workspaceSystem.deleteCell(guidOfChosenPanel);
+        this.clearConfigForm();
+      });
+    } else {
+      this.#configEditorFooter.innerHTML = FooterHtml;
+    }
 
     const acceptBtn = this.#configEditorFooter.querySelector('.SubmitBtn-js');
-    acceptBtn.addEventListener('click', () => {
+    acceptBtn && acceptBtn.addEventListener('click', () => {
       this.#focusedPluginInstance.setFormSettings(this.#configFocusedPlugin);
     });
 
@@ -155,15 +180,25 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         this.#logSystem.debug(`PluginFormSettings of instance with guid "${evt.guid}" received`);
       } catch (error) {}
 
-      this.render(settingsFocusedPlugin);
+      const renderOptions = {
+        guidOfChosenPanel: evt.guid,
+        doRenderDeletePanelBtn: false,
+      };
+
+      if (this.#workspaceSystem?.getGUIDListOfWidgets()?.includes(evt.guid)) {
+        renderOptions.doRenderDeletePanelBtn = true;
+      }
+
+      this.render(settingsFocusedPlugin, renderOptions);
     }
   }
 
   clearConfigForm() {
+    this.#trackedPanelName.textContent = '-';
     this.render();
   }
 
-  render(config) {
+  render(config, renderOptions = {}) {
     this.#logSystem.info('Started form rendering');
 
     if (config?.fields?.length) {
@@ -171,13 +206,9 @@ export class ConfigEditorPanel extends AppPanelPlugin {
 
       const { fields = [] } = config;
       this.#fieldsProcessing(this.#configFocusedPlugin, this.#configEditorBody, fields);
-      this.#renderPanelFooter();
+      this.#renderPanelFooter(renderOptions);
     } else {
-      this.#configEditorBody.innerHTML = `
-        <div class="ComponentContainer" style="text-align: center;">
-          Настройки для данной панели отсутствуют.
-        </div>
-      `;
+      this.#configEditorBody.innerHTML = NoSettingsHtml;
       if (this.#configEditorFooter) {
         this.#configEditorFooter.remove();
         this.#configEditorFooter = null;
@@ -276,17 +307,29 @@ export class ConfigEditorPanel extends AppPanelPlugin {
         // Setting "input" event listener
         this.#logSystem.debug('Genereting of form field started');
 
-        fieldElement.addEventListener('input', e => {
-          if (typeof e.target.value === 'undefined') configFocusedPlugin[propName] = e.value;
-          else configFocusedPlugin[propName] = e.target.value;
-        });
+        if (component == 'checkbox' || component == 'radio' || component == 'switch') {
+          fieldElement.addEventListener('change', e => {
+            configFocusedPlugin[propName] = e.target.checked;
+          });
+          this.#logSystem.debug('Inited "change" event listener');
 
-        this.#logSystem.debug('Inited "input" event listener');
+          if (typeof propValue !== 'undefined') fieldElement.checked = propValue;
+          if (typeof configFocusedPlugin[propName] !== 'undefined') {
+            fieldElement.checked = configFocusedPlugin[propName];
+          }
+        } else {
+          fieldElement.addEventListener('input', e => {
+            if (typeof e.target.value === 'undefined') configFocusedPlugin[propName] = e.value;
+            else configFocusedPlugin[propName] = e.target.value;
+          });
+          this.#logSystem.debug('Inited "input" event listener');
 
-        // Preset value to input
-        if (typeof propValue !== 'undefined') fieldElement.value = propValue;
-        if (typeof configFocusedPlugin[propName] !== 'undefined')
-          fieldElement.value = configFocusedPlugin[propName];
+          // Preset value to input
+          if (typeof propValue !== 'undefined') fieldElement.value = propValue;
+          if (typeof configFocusedPlugin[propName] !== 'undefined') {
+            fieldElement.value = configFocusedPlugin[propName];
+          }
+        }
 
         // Set validation method to field
         if (typeof validation !== 'undefined') {
@@ -360,5 +403,9 @@ export class ConfigEditorPanel extends AppPanelPlugin {
       newSection.appendChild(fieldElement);
       return newSection;
     }
+  }
+
+  #handleCloseBtnClick = () => {
+    window.Application.autocomplete.AppGUISystem.toggleSidebar('right', false);
   }
 }

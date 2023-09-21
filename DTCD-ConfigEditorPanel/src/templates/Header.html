@@ -1,6 +1,22 @@
 <div class="Header">
-  <h1 class="ConfigTitle">Настройка компонента</h1>
-  <span class="TrackedPanelName TrackedPanelName-js"></span>
+  <div class="ComponentRow">
+    <div class="Column">
+      <h1 class="ConfigTitle">Настройка компонента</h1>
+      <span class="TrackedPanelName TrackedPanelName-js"></span>
+    </div>
+    <div class="Column size_auto align_top">
+      <base-tooltip
+        content="Закрыть панель настроек"
+        placement="bottom"
+        alignment="right"
+        class="ClosePanelBtnWrapper"
+      >
+        <button class="ClosePanelBtn ClosePanelBtn-js" type="button">
+          <span class="FontIcon name_closeSmall size_xl"></span>
+        </button>
+      </base-tooltip>
+    </div>
+  </div>
 </div>
 
 <div class="ComponentContainer">
