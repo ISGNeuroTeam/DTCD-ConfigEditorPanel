@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - close panel button
 - delete workspace panels button
 
+### Changed
+
+- creation of subscriptions
+
 ## [0.10.0]
 
 ### Added
